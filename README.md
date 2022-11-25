@@ -9,24 +9,75 @@ A clean C++ wrapper around the ffmpeg libraries which can be used in any C++ pro
 
 # Installation
 
-## Windows
+## Dependencies
 
-1. Clone the repository
-2. Download a build of FFmpeg from https://ffmpeg.zeranoe.com/builds/. The project was last tested with **4.1**. You will need both the dev version (for .h and .lib files) and the shared version (for .dll). Extract all of them into the ffmpeg directory in the repository. there are more instructions on how to extract them properly in the ffmpeg/readme.txt file.
-3. Open the Visual Studio solution in the source directory.
-4. Build everything.
+The project library depends on multiple *libav* components that should be installed before attempting to build the library.
 
-This will build a .lib file that you can use in your own C++ projects. It will also generate an include-folder in the repo root that you can add to your include filders in your own project.
+```bash
+sudo apt install -y libavcodec-dev libavformat-dev libavutil-dev libavdevice-dev libavfilter-dev
+```
 
-## Linux
+The [*decode_stream*](examples/decode_stream/decode_stream.cpp) needs two more libraries.
 
-Currently, only a Windows environment with Visual Studio is supported. This is simply because I do not have experience with cmake and Linux-projects, since the project itself is fully platform-independent. If anyone is willing to help me out with configuring cmake, please get in touch!
+```bash
+sudo apt install -y libopencv-dev libswscale-dev
+```
+
+## Build
+
+The library can be built manually like every *cmake* project or through the build script *build.sh*.
+
+```bash
+Build the ffmpeg library and example applications
+
+Syntax: ./build.sh [-a|c|e|l|h|i]
+a     Build all
+c     Clean build directory
+e     Build examples
+l     Build library only
+h     Help
+i     Install library.(Default path: /usr/local/)
+
+Examples:
+./build.sh -a     Builds all
+```
+
+The examples built will be under *build/apps*.
 
 # Usage
 
-There are multiple demo projects included in the solution. Check out the demo-project for a thorough exploration of the features (demuxing, decoding, filtering, encoding, muxing) or one of the other examples for a simpler example to follow.
+There are multiple [example projects](examples/) included in the solution. Check out the [demo-project](examples/demo/) for a thorough exploration of the features (demuxing, decoding, filtering, encoding, muxing).
 
-There is also a .NET Core compatible simplified interface included so that you can embed this project in your .NET Core projects.
+If you want to use it in an other project, you must install the library [see](#build) and then you can use pck-config in your other project to include the library. There are 2 macro defined:
+
+- FFMPEGCPP_INCLUDE_DIRS: gives the path to the directory of library headers
+- FFMPEGCPP_LIBS: give the path to the library for the linker
+
+```cmake
+# in CMakeLists.txt
+...
+
+find_package(FFMPEGCPP REQUIRED)
+
+...
+
+include_directories(${FFMPEGCPP_INCLUDE_DIRS})
+
+...
+
+target_link_libraries(${PROJECT_NAME} ${FFMPEGCPP_LIBS} ...)
+```
+
+## Decode stream app
+
+This app was added by myself in order to show how you can open and display a tcp stream (e.g. coming from a camera).
+There is bash script, called *stream_srv.sh*, you need to launch to create a tcp stream before launching the *decode_stream* app. The *decode_stream* is not built by default cause it have additional dependencies [see](#dependencies). To build it just go to the *build* folder and perform the following commands.
+
+```bash
+cd build
+cmake -DBUILD_DECODE_STREAM=ON ..
+make
+```
 
 ## C++
 
@@ -64,90 +115,6 @@ while (!demuxer->IsDone())
 // Save everything to disk by closing the muxer.
 muxer->Close();
 ```
-
-If you use the included simple-interface library, which only supports a subset of the full library, using ffmpeg-cpp becomes even easier:
-
-```
-#include "SimpleInterface.h"
-
-int main()
-{
-	void* handle = ffmpegCppCreate("out.mp4");
-	ffmpegCppAddVideoStream(handle, "samples/big_buck_bunny.mp4");
-	ffmpegCppAddVideoFilter(handle, "transpose=cclock[middle];[middle]vignette");
-	ffmpegCppAddAudioStream(handle, "samples/big_buck_bunny.mp4");
-	ffmpegCppGenerate(handle);
-	ffmpegCppClose(handle);
-}
-```
-
-## C\#
-
-The simple-interface is made in such a way that it can easily be called using [DllImport] from any C# project:
-
-```
-	public class Example
-	{
-
-		public Example()
-		{
-			try
-			{
-				string inFileName = "in.mp4";
-				string outFileName = "out.mp4";
-				IntPtr handle = ffmpegCppCreate(outFileName); CheckError(handle);
-				ffmpegCppAddVideoStream(handle, inFileName); CheckError(handle);
-				ffmpegCppAddAudioStream(handle, inFileName); CheckError(handle);
-				ffmpegCppAddVideoFilter(handle, "crop=1080:1920:740:0[middle];[middle]transpose=3"); CheckError(handle);
-				ffmpegCppGenerate(handle); CheckError(handle);
-				ffmpegCppClose(handle);
-			}
-			catch (InvalidOperationException e)
-			{
-				Console.WriteLine("ERROR: " + e.Message);
-			}
-		}
-
-		private void CheckError(IntPtr handle)
-		{
-			if (ffmpegCppIsError(handle))
-			{
-				IntPtr errorPtr = ffmpegCppGetError(handle);
-				string error = Marshal.PtrToStringAnsi(errorPtr);
-				throw new InvalidOperationException(error);
-			}
-		}
-
-		[DllImport("simple_interface.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern IntPtr ffmpegCppCreate(string outFileName);
-
-		[DllImport("simple_interface.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern void ffmpegCppAddVideoStream(IntPtr handle, [MarshalAs(UnmanagedType.LPStr)] string inFileName);
-
-		[DllImport("simple_interface.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern void ffmpegCppAddAudioStream(IntPtr handle, [MarshalAs(UnmanagedType.LPStr)] string inFileName);
-
-		[DllImport("simple_interface.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern void ffmpegCppAddVideoFilter(IntPtr handle, [MarshalAs(UnmanagedType.LPStr)] string filterString);
-
-		[DllImport("simple_interface.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern void ffmpegCppAddAudioFilter(IntPtr handle, [MarshalAs(UnmanagedType.LPStr)] string filterString);
-
-		[DllImport("simple_interface.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern void ffmpegCppGenerate(IntPtr handle);
-
-		[DllImport("simple_interface.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern bool ffmpegCppIsError(IntPtr handle);
-
-		[DllImport("simple_interface.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern IntPtr ffmpegCppGetError(IntPtr handle);
-
-		[DllImport("simple_interface.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern void ffmpegCppClose(IntPtr handle);
-	}
-```
-
-If you want to use ffmpeg-cpp in a C# project, you can easily do so by making your own C-wrapper around the 
 
 # Why?
 

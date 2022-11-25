@@ -28,6 +28,7 @@ pkg_check_modules(LIBAV REQUIRED IMPORTED_TARGET
 
 option(BUILD_SHARED_LIB "Build ffmpeg as shared library" ON)
 option(BUILD_EXAMPLES "Build some examples to show how the library works" OFF)
+option(BUILD_DECODE_STREAM "Build the decode stream example. Needs opencv and swscale" OFF)
 
 # Subdirectories
 if (BUILD_SHARED_LIB)

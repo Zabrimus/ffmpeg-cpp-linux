@@ -9,7 +9,7 @@ BUILD_LIB=-DBUILD_SHARED_LIB
 
 help()
 {
-    echo "Build the source code"
+    echo "Build the ffmpeg library and example applications"
     echo
     echo "Syntax: $0 [-a|c|e|l|h|i]"
     echo "a     Build all"
@@ -17,10 +17,11 @@ help()
     echo "e     Build examples"
     echo "l     Build library only"
     echo "h     Help"
-    echo "i     Install library. (Default path: /usr/local/)"
+    echo "i     Install library.(Default path: /usr/local/)"
     echo
     echo "Examples:"
     echo "$0 -a     Builds all"
+    echo "$0 -i     Install the library on your machine"
 }
 
 build_all=n
