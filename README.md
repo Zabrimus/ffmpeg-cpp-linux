@@ -124,4 +124,4 @@ I developed this project to be able to to integrate FFmpeg into our program with
 
 # License
 
-[License](LICENCE.md)
+[License](LICENSE.md)
