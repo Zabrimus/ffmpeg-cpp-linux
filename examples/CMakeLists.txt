@@ -4,9 +4,18 @@ find_package(PkgConfig)
 
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
-file(COPY samples DESTINATION ${CMAKE_BINARY_DIR})
+file(COPY samples DESTINATION ${CMAKE_BINARY_DIR}/apps)
 
-set(EXECUTABLE_OUTPUT_PATH  ${CMAKE_BINARY_DIR})
+set(EXECUTABLE_OUTPUT_PATH  ${CMAKE_BINARY_DIR}/apps)
+
 add_subdirectory(decode_audio)
-add_subdirectory(demo)
+add_subdirectory(decode_stream)
 add_subdirectory(decode_video)
+add_subdirectory(demo)
+add_subdirectory(difference)
+add_subdirectory(encode_audio)
+add_subdirectory(encode_video)
+add_subdirectory(filtering_audio)
+add_subdirectory(filtering_video)
+add_subdirectory(print_info)
+add_subdirectory(remuxing)

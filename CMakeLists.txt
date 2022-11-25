@@ -26,6 +26,14 @@ pkg_check_modules(LIBAV REQUIRED IMPORTED_TARGET
                     libavdevice
                     libavfilter )
 
+option(BUILD_SHARED_LIB "Build ffmpeg as shared library" ON)
+option(BUILD_EXAMPLES "Build some examples to show how the library works" OFF)
+
 # Subdirectories
-add_subdirectory(src)
-add_subdirectory(examples)
+if (BUILD_SHARED_LIB)
+    add_subdirectory(src)
+endif()
+
+if (BUILD_EXAMPLES)
+    add_subdirectory(examples)
+endif()
