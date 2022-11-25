@@ -2,8 +2,6 @@
 
 :warning: FORKED FROM [Raveler/ffmpeg-cpp](https://github.com/Raveler/ffmpeg-cpp)
 
-TODO : Change README
-
 # ffmpeg-cpp
 A clean C++ wrapper around the ffmpeg libraries which can be used in any C++ project or C# project (with DllImport or CLR). Makes the most commonly used functionality of FFmpeg easily available for any C++ projects with an easy-to-use interface. The full power of FFmpeg compacted in 10 lines of C++ code: if this sounds useful to you, read on!
 
@@ -122,12 +120,8 @@ I developed this project to be able to to integrate FFmpeg into our program with
 
 # Roadmap
 
-- Add Linux/Mac build support
-- Adding proper unit tests
-- Testing with more codecs, containers
+- [ ] Solve all the warnings coming from libav
 
 # License
 
-This library is licensed under LGPL (https://en.wikipedia.org/wiki/GNU_Lesser_General_Public_License).
-
-Please note though that FFmpeg, which you will need to build this library, is not. Depending on how you build it, it is either LGPL or GPL. So if you use the GPL-version of FFmpeg in your project, this library will be GPL too.
+[License](LICENCE.md)
