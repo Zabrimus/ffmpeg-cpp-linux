@@ -1,0 +1,13 @@
+on:
+  push:
+    branches:
+      - main
+      
+jobs:
+  build:
+    name: build library and examples
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: build all 
+      run: ./build.sh -a
