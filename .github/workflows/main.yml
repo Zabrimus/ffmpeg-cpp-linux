@@ -1,3 +1,5 @@
+name: Build ffmpeg lib and examples files
+
 on:
   push:
     branches:
