@@ -2,7 +2,7 @@
 
 :warning: FORKED FROM [Raveler/ffmpeg-cpp](https://github.com/Raveler/ffmpeg-cpp)
 
-[![.github/workflows/main.yml](https://github.com/galla15/ffmpeg-cpp-linux/actions/workflows/main.yml/badge.svg)](https://github.com/galla15/ffmpeg-cpp-linux/actions/workflows/main.yml)
+[![C/C++ CI](https://github.com/galla15/ffmpeg-cpp-linux/actions/workflows/c-cpp.yml/badge.svg)](https://github.com/galla15/ffmpeg-cpp-linux/actions/workflows/c-cpp.yml)
 
 # ffmpeg-cpp
 A clean C++ wrapper around the ffmpeg libraries which can be used in any C++ project or C# project (with DllImport or CLR). Makes the most commonly used functionality of FFmpeg easily available for any C++ projects with an easy-to-use interface. The full power of FFmpeg compacted in 10 lines of C++ code: if this sounds useful to you, read on!
