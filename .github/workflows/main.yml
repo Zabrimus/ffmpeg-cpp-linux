@@ -8,6 +8,5 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    
     - name: build all 
       run: ./build.sh -a
