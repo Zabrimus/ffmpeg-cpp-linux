@@ -2,7 +2,6 @@
 
 :warning: FORKED FROM [Raveler/ffmpeg-cpp](https://github.com/Raveler/ffmpeg-cpp)
 
-[![C/C++ CI](https://github.com/galla15/ffmpeg-cpp-linux/actions/workflows/c-cpp.yml/badge.svg?branch=master&event=workflow_run)](https://github.com/galla15/ffmpeg-cpp-linux/actions/workflows/c-cpp.yml)\
 [![C/C++ CI](https://github.com/galla15/ffmpeg-cpp-linux/actions/workflows/c-cpp.yml/badge.svg?branch=master&event=push)](https://github.com/galla15/ffmpeg-cpp-linux/actions/workflows/c-cpp.yml)
 
 # ffmpeg-cpp
