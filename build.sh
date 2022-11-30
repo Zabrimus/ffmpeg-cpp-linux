@@ -69,6 +69,7 @@ else
     done
 fi
 
+ret=0
 mkdir -p $BUILD_DIR
 
 if [ $build_all == y ]; then
@@ -97,6 +98,7 @@ if [ $build == y ]; then
         echo "=== Building done ==="
     else
         echo "=== Building failed ==="
+        ret=1
         clean=y
     fi
     cd $SCRIPTPATH
@@ -111,3 +113,5 @@ if [ $clean == y ]; then
     echo "=== Cleaning ==="
     sudo rm -rf $BUILD_DIR
 fi
+
+exit $ret
