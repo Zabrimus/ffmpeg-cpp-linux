@@ -15,7 +15,7 @@ namespace ffmpegcpp
 
 		explicit FFmpegException(const std::string & error, int returnValue);
 
-		virtual char const* what() const noexcept
+		char const* what() const noexcept override
 		{
 			return (const char *)error;
 		}

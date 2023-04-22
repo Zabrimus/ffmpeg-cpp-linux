@@ -20,8 +20,7 @@ namespace ffmpegcpp
 	}
 
 	AudioInputStream::~AudioInputStream()
-	{
-	}
+	= default;
 
 	void AudioInputStream::AddStreamInfo(ContainerInfo* containerInfo)
 	{
@@ -34,25 +33,21 @@ namespace ffmpegcpp
 		StreamData* metaData = new StreamData();
 		info.timeBase = tb;
 
-		AVCodecContext* codecContext = avcodec_alloc_context3(NULL);
-		if (!codecContext) throw new FFmpegException("Failed to allocate temporary codec context.");
+		AVCodecContext* codecContext = avcodec_alloc_context3(nullptr);
+        if (!codecContext) {
+            throw FFmpegException("Failed to allocate temporary codec context.");
+        }
+
 		int ret = avcodec_parameters_to_context(codecContext, stream->codecpar);
 		if (ret < 0)
 		{
 			avcodec_free_context(&codecContext);
-			throw new FFmpegException("Failed to read parameters from stream");
+			throw FFmpegException("Failed to read parameters from stream");
 		}
-
-		codecContext->properties = stream->codec->properties;
-		codecContext->codec = stream->codec->codec;
-		codecContext->qmin = stream->codec->qmin;
-		codecContext->qmax = stream->codec->qmax;
-		codecContext->coded_width = stream->codec->coded_width;
-		codecContext->coded_height = stream->codec->coded_height;
 
 		info.bitRate = CalculateBitRate(codecContext);
 
-		AVCodec* codec = CodecDeducer::DeduceDecoder(codecContext->codec_id);
+		const AVCodec *codec = CodecDeducer::DeduceDecoder(codecContext->codec_id);
 		info.codec = codec;
 
 		info.sampleRate = codecContext->sample_rate;

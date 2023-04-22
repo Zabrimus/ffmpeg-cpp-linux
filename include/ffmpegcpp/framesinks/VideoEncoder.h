@@ -16,14 +16,14 @@ namespace ffmpegcpp
 		VideoEncoder(VideoCodec* codec, Muxer* muxer, AVPixelFormat format);
 		VideoEncoder(VideoCodec* codec, Muxer* muxer, AVRational frameRate);
 		VideoEncoder(VideoCodec* codec, Muxer* muxer, AVRational frameRate, AVPixelFormat format);
-		virtual ~VideoEncoder();
+		~VideoEncoder() override;
 
-		FrameSinkStream* CreateStream();
+		FrameSinkStream* CreateStream() override;
 
-		void WriteFrame(int streamIndex, AVFrame* frame, StreamData* metaData);
-		void Close(int streamIndex);
+		void WriteFrame(int streamIndex, AVFrame* frame, StreamData* metaData) override;
+		void Close(int streamIndex) override;
 
-		bool IsPrimed();
+		bool IsPrimed() override;
 
 	private:
 

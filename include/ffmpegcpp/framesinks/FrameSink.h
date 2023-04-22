@@ -13,7 +13,7 @@ namespace ffmpegcpp
 
 		virtual AVMediaType GetMediaType() = 0;
 
-		virtual ~FrameSink() {}
+		virtual ~FrameSink() = default;
 	};
 
 

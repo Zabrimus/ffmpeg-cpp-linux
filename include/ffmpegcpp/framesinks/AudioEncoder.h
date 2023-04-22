@@ -17,15 +17,15 @@ namespace ffmpegcpp
 	public:
 		AudioEncoder(AudioCodec* codec, Muxer* muxer);
 		AudioEncoder(AudioCodec* codec, Muxer* muxer, int bitRate);
-		virtual ~AudioEncoder();
+		~AudioEncoder() override;
 
-		FrameSinkStream* CreateStream();
-		void WriteFrame(int streamIndex, AVFrame* frame, StreamData* metaData);
-		void Close(int streamIndex);
+		FrameSinkStream* CreateStream() override;
+		void WriteFrame(int streamIndex, AVFrame* frame, StreamData* metaData) override;
+		void Close(int streamIndex) override;
 
-		virtual void WriteConvertedFrame(AVFrame* frame);
+		void WriteConvertedFrame(AVFrame* frame) override;
 
-		bool IsPrimed();
+		bool IsPrimed() override;
 
 	private:
 

@@ -10,11 +10,11 @@ namespace ffmpegcpp
 
 		static AVCodec* DeduceEncoderFromFilename(const char* fileName);
 
-		static AVCodec* DeduceEncoder(AVCodecID codecId);
-		static AVCodec* DeduceEncoder(const char* codecName);
+		static const AVCodec * DeduceEncoder(AVCodecID codecId);
+		static const AVCodec * DeduceEncoder(const char* codecName);
 
-		static AVCodec* DeduceDecoder(AVCodecID codecId);
-		static AVCodec* DeduceDecoder(const char* codecName);
+		static const AVCodec * DeduceDecoder(AVCodecID codecId);
+		static const AVCodec * DeduceDecoder(const char* codecName);
 	};
 
 }

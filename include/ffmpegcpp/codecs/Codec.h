@@ -11,8 +11,8 @@ namespace ffmpegcpp
 	{
 	public:
 
-		Codec(const char* codecName);
-		Codec(AVCodecID codecId);
+		explicit Codec(const char* codecName);
+		explicit Codec(AVCodecID codecId);
 		virtual ~Codec();
 
 		void SetOption(const char* name, const char* value);
@@ -33,7 +33,7 @@ namespace ffmpegcpp
 
 		void CleanUp();
 
-		AVCodecContext* LoadContext(AVCodec* codec);
+		AVCodecContext* LoadContext(const AVCodec *codec);
 
 		bool opened = false;
 	};

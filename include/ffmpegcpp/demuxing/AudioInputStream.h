@@ -14,10 +14,10 @@ namespace ffmpegcpp
 		AudioInputStream(AVFormatContext* format, AVStream* stream);
 		~AudioInputStream();
 
-		void AddStreamInfo(ContainerInfo* info);
+		void AddStreamInfo(ContainerInfo* info) override;
 
 	protected:
 
-		virtual void ConfigureCodecContext();
+		void ConfigureCodecContext() override;
 	};
 }

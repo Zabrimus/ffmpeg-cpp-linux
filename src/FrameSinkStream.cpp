@@ -1,5 +1,4 @@
 #include <ffmpegcpp/framesinks/FrameSinkStream.h>
-#include <ffmpegcpp/FFmpegException.h>
 
 namespace ffmpegcpp
 {

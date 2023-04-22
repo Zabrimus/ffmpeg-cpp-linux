@@ -14,9 +14,9 @@ namespace ffmpegcpp
 	{
 	public:
 
-		Demuxer(const char* fileName);
-		Demuxer(const char* fileName, AVInputFormat* inputFormat, AVDictionary *inputFormatOptions);
-		~Demuxer();
+		explicit Demuxer(const char* fileName);
+		Demuxer(const char* fileName, const AVInputFormat* inputFormat, AVDictionary *inputFormatOptions);
+		~Demuxer() override;
 
 		void DecodeBestAudioStream(FrameSink* frameSink);
 		void DecodeBestVideoStream(FrameSink* frameSink);
@@ -24,9 +24,9 @@ namespace ffmpegcpp
 		void DecodeAudioStream(int streamId, FrameSink* frameSink);
 		void DecodeVideoStream(int streamId, FrameSink* frameSink);
 
-		virtual void PreparePipeline();
-		virtual bool IsDone();
-		virtual void Step();
+		void PreparePipeline() override;
+		bool IsDone() override;
+		void Step() override;
 
 		ContainerInfo GetInfo();
 		int GetFrameCount(int streamId);

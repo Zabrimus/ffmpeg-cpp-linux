@@ -81,7 +81,7 @@ namespace ffmpegcpp
 		}
 
 		// pass on to the sink
-		// we don't have a time_base so we pass NULL and hope that it gets handled later...
+		// we don't have a time_base, so we pass NULL and hope that it gets handled later...
 		output->WriteFrame(frame, metaData);
 	}
 

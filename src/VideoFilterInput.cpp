@@ -18,7 +18,10 @@ namespace ffmpegcpp
 	void VideoFilterInput::WriteFrame(AVFrame* frame)
 	{
 		AVFrame *tmp = av_frame_clone(frame);
-		if (!tmp) throw new FFmpegException("Failed to clone frame");
+        if (!tmp) {
+            throw FFmpegException("Failed to clone frame");
+        }
+
 		av_frame_unref(frame);
 
 		// store the frame into a fifo queue
@@ -28,11 +31,11 @@ namespace ffmpegcpp
 			if (ret < 0)
 			{
 				av_frame_free(&tmp);
-				throw new FFmpegException("Failed to allocate buffer for fifo queue", ret);
+				throw FFmpegException("Failed to allocate buffer for fifo queue", ret);
 			}
 		}
 
-		av_fifo_generic_write(frame_queue, &tmp, sizeof(tmp), NULL);
+		av_fifo_generic_write(frame_queue, &tmp, sizeof(tmp), nullptr);
 		frameReceived = true;
 	}
 
@@ -49,7 +52,7 @@ namespace ffmpegcpp
 
 		// fetch the frame from the queue
 		AVFrame *tmp;
-		av_fifo_generic_read(frame_queue, &tmp, sizeof(tmp), NULL);
+		av_fifo_generic_read(frame_queue, &tmp, sizeof(tmp), nullptr);
 
 		*frame = tmp;
 
@@ -64,7 +67,7 @@ namespace ffmpegcpp
 
 		// fetch the frame from the queue
 		AVFrame *tmp;
-		av_fifo_generic_peek(frame_queue, &tmp, sizeof(tmp), NULL);
+		av_fifo_generic_peek(frame_queue, &tmp, sizeof(tmp), nullptr);
 
 		*frame = tmp;
 
@@ -86,7 +89,7 @@ namespace ffmpegcpp
 		closed = true;
 	}
 
-	bool VideoFilterInput::IsClosed()
+	bool VideoFilterInput::IsClosed() const
 	{
 		return closed;
 	}

@@ -10,10 +10,10 @@ namespace ffmpegcpp
 	{
 		try
 		{
-			AVCodec* codec = CodecDeducer::DeduceDecoder(codecName);
+			const AVCodec *codec = CodecDeducer::DeduceDecoder(codecName);
 			Init(inFileName, codec, output);
 		}
-		catch (FFmpegException e)
+		catch (FFmpegException& e)
 		{
 			CleanUp();
 			throw e;
@@ -24,10 +24,10 @@ namespace ffmpegcpp
 	{
 		try
 		{
-			AVCodec* codec = CodecDeducer::DeduceDecoder(codecId);
+			const AVCodec *codec = CodecDeducer::DeduceDecoder(codecId);
 			Init(inFileName, codec, output);
 		}
-		catch (FFmpegException e)
+		catch (FFmpegException& e)
 		{
 			CleanUp();
 			throw e;
@@ -75,7 +75,7 @@ namespace ffmpegcpp
 		fclose(file);
 	}
 
-	void EncodedFileSource::Init(const char* inFileName, AVCodec* codec, FrameSink* output)
+	void EncodedFileSource::Init(const char* inFileName, const AVCodec *codec, FrameSink* output)
 	{
 		this->output = output->CreateStream();
 		this->codec = codec;
@@ -93,7 +93,7 @@ namespace ffmpegcpp
 		}
 
 		/* open it */
-		if (int ret = avcodec_open2(codecContext, codec, NULL) < 0)
+		if (int ret = avcodec_open2(codecContext, codec, nullptr) < 0)
 		{
 			throw FFmpegException("Failed to open context for codec " + string(codec->name), ret);
 		}
@@ -188,7 +188,7 @@ namespace ffmpegcpp
 		{
 
 			/* flush the decoder */
-			pkt->data = NULL;
+			pkt->data = nullptr;
 			pkt->size = 0;
 			Decode(pkt, decoded_frame);
 
@@ -240,7 +240,7 @@ namespace ffmpegcpp
 
 
 			// push the frame to the next stage.
-			// The time_base is filled in in the codecContext after the first frame is decoded
+			// The time_base is filled in the codecContext after the first frame is decoded,
 			// so we can fetch it from there.
 			output->WriteFrame(frame, metaData);
 		}

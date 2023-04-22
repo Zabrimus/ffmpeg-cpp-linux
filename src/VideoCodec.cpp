@@ -16,9 +16,7 @@ namespace ffmpegcpp
 	{
 	}
 
-	VideoCodec::~VideoCodec()
-	{
-	}
+	VideoCodec::~VideoCodec() = default;
 
 	void VideoCodec::SetQualityScale(int qscale)
 	{
@@ -88,8 +86,7 @@ namespace ffmpegcpp
 
 	AVRational VideoCodec::GetClosestSupportedFrameRate(AVRational originalFrameRate)
 	{
-		if (!codecContext->codec->supported_framerates)
-		{
+		if (!codecContext->codec->supported_framerates) {
 			// make up a frame rate - there is no supported frame rate
 			return originalFrameRate;
 		};

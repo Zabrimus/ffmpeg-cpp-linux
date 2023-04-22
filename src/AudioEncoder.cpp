@@ -51,7 +51,7 @@ namespace ffmpegcpp
 		{
 			formatConverter = new AudioFormatConverter(this, codec->GetContext());
 		}
-		catch (FFmpegException e)
+		catch (FFmpegException& e)
 		{
 			CleanUp();
 			throw e;
@@ -128,10 +128,10 @@ namespace ffmpegcpp
 		if (codec == nullptr) return; // can't close if we were never opened
 
 		// First flush the converter and the FIFO queue in it
-		formatConverter->ProcessFrame(NULL);
+		formatConverter->ProcessFrame(nullptr);
 
 		// then flush our encoder
-		WriteConvertedFrame(NULL);
+		WriteConvertedFrame(nullptr);
 	}
 
 	void AudioEncoder::PollCodecForPackets()

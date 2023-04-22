@@ -11,11 +11,11 @@ namespace ffmpegcpp
 	public:
 
 		RawAudioFileSource(const char* fileName, const char* inputFormat, int sampleRate, int channels, FrameSink* frameSink);
-		virtual ~RawAudioFileSource();
+		~RawAudioFileSource() override;
 
-		virtual void PreparePipeline();
-		virtual bool IsDone();
-		virtual void Step();
+		void PreparePipeline() override;
+		bool IsDone() override;
+		void Step() override;
 
 	private:
 

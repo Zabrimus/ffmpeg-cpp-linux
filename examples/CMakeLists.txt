@@ -2,7 +2,8 @@ cmake_minimum_required(VERSION 3.11)
 
 find_package(PkgConfig)
 
-include_directories(${CMAKE_SOURCE_DIR}/include)
+include_directories(${CMAKE_SOURCE_DIR}/../include)
+link_directories(${CMAKE_SOURCE_DIR}/../../build/src/lib)
 
 file(COPY samples DESTINATION ${CMAKE_BINARY_DIR}/apps)
 

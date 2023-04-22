@@ -10,9 +10,9 @@ namespace ffmpegcpp
 	{
 	public:
 
-		VideoCodec(const char* codecName);
-		VideoCodec(AVCodecID codecId);
-		virtual ~VideoCodec();
+		explicit VideoCodec(const char* codecName);
+		explicit VideoCodec(AVCodecID codecId);
+		~VideoCodec() override;
 
 		OpenCodec* Open(int width, int height, AVRational* frameRate, AVPixelFormat format);
 

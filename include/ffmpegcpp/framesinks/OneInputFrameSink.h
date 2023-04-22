@@ -11,11 +11,11 @@ namespace ffmpegcpp
 	public:
 
 		OneInputFrameSink(FrameWriter* writer, AVMediaType mediaType);
-		~OneInputFrameSink();
+		~OneInputFrameSink() override;
 
-		virtual AVMediaType GetMediaType();
+		AVMediaType GetMediaType() override;
 
-		FrameSinkStream* CreateStream();
+		FrameSinkStream* CreateStream() override;
 
 
 	private:

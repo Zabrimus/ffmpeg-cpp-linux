@@ -9,13 +9,10 @@ namespace ffmpegcpp
 	{
 	}
 
-	VideoInputStream::~VideoInputStream()
-	{
-	}
+	VideoInputStream::~VideoInputStream() = default;
 
 	void VideoInputStream::ConfigureCodecContext()
 	{
-
 	}
 
 	void VideoInputStream::AddStreamInfo(ContainerInfo* containerInfo)
@@ -29,31 +26,26 @@ namespace ffmpegcpp
 
 		AVRational tb = overrideFrameRate.num ? av_inv_q(overrideFrameRate) : stream->time_base;
 		AVRational fr = overrideFrameRate;
-		if (!fr.num) fr = av_guess_frame_rate(format, stream, NULL);
+		if (!fr.num) fr = av_guess_frame_rate(format, stream, nullptr);
 
 		StreamData* metaData = new StreamData();
 		info.timeBase = tb;
 		info.frameRate = fr;
 
-		AVCodecContext* codecContext = avcodec_alloc_context3(NULL);
-		if (!codecContext) throw new FFmpegException("Failed to allocate temporary codec context.");
-		int ret = avcodec_parameters_to_context(codecContext, stream->codecpar);
-		if (ret < 0)
-		{
-			avcodec_free_context(&codecContext);
-			throw new FFmpegException("Failed to read parameters from stream");
-		}
+		AVCodecContext* codecContext = avcodec_alloc_context3(nullptr);
+        if (!codecContext) {
+            throw FFmpegException("Failed to allocate temporary codec context.");
+        }
 
-		codecContext->properties = stream->codec->properties;
-		codecContext->codec = stream->codec->codec;
-		codecContext->qmin = stream->codec->qmin;
-		codecContext->qmax = stream->codec->qmax;
-		codecContext->coded_width = stream->codec->coded_width;
-		codecContext->coded_height = stream->codec->coded_height;
+		int ret = avcodec_parameters_to_context(codecContext, stream->codecpar);
+		if (ret < 0) {
+			avcodec_free_context(&codecContext);
+			throw FFmpegException("Failed to read parameters from stream");
+		}
 
 		info.bitRate = CalculateBitRate(codecContext);
 
-		AVCodec* codec = CodecDeducer::DeduceDecoder(codecContext->codec_id);
+		const AVCodec *codec = CodecDeducer::DeduceDecoder(codecContext->codec_id);
 		info.codec = codec;
 
 		info.format = codecContext->pix_fmt;

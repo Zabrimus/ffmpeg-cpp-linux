@@ -15,11 +15,11 @@ namespace ffmpegcpp
 		this->fileName = fileName;
 
 		/* allocate the output media context */
-		avformat_alloc_output_context2(&containerContext, NULL, NULL, fileName);
+		avformat_alloc_output_context2(&containerContext, nullptr, nullptr, fileName);
 		if (!containerContext)
 		{
 			printf("WARNING: Could not deduce output format from file extension: using MP4. as default\n");
-			avformat_alloc_output_context2(&containerContext, NULL, "mp4", fileName);
+			avformat_alloc_output_context2(&containerContext, nullptr, "mp4", fileName);
 		}
 		if (!containerContext)
 		{
@@ -71,12 +71,12 @@ namespace ffmpegcpp
 		packetQueue.clear();
 	}
 
-	AVCodec* Muxer::GetDefaultVideoFormat()
+	const AVCodec * Muxer::GetDefaultVideoFormat()
 	{
 		return CodecDeducer::DeduceEncoder(containerFormat->video_codec);
 	}
 
-	AVCodec* Muxer::GetDefaultAudioFormat()
+	const AVCodec * Muxer::GetDefaultAudioFormat()
 	{
 		return CodecDeducer::DeduceEncoder(containerFormat->audio_codec);
 	}
@@ -86,7 +86,7 @@ namespace ffmpegcpp
 		if (opened) throw FFmpegException("You cannot open a new stream after something was written to the muxer");
 
 		// create an internal stream and pass it on
-		AVStream* stream = avformat_new_stream(containerContext, NULL);
+		AVStream* stream = avformat_new_stream(containerContext, nullptr);
 		if (!stream)
 		{
 			throw FFmpegException("Could not allocate stream for container " + string(containerContext->oformat->name));
@@ -205,7 +205,7 @@ namespace ffmpegcpp
 		}
 
 		// Write the stream header, if any.
-		int ret = avformat_write_header(containerContext, NULL);
+		int ret = avformat_write_header(containerContext, nullptr);
 		if (ret < 0)
 		{
 			throw FFmpegException("Error when writing header to output file " + fileName, ret);

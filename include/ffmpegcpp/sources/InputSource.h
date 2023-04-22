@@ -6,7 +6,7 @@ namespace ffmpegcpp
 	{
 	public:
 
-		virtual ~InputSource() {}
+		virtual ~InputSource() = default;
 
 		virtual void PreparePipeline() = 0;
 		virtual bool IsDone() = 0;

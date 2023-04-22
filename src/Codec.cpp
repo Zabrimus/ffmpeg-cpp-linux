@@ -9,14 +9,14 @@ namespace ffmpegcpp
 	Codec::Codec(const char* codecName)
 	{
 		
-		AVCodec* codec = CodecDeducer::DeduceEncoder(codecName);
+		const AVCodec *codec = CodecDeducer::DeduceEncoder(codecName);
 		codecContext = LoadContext(codec);
 	}
 
 
 	Codec::Codec(AVCodecID codecId)
 	{
-		AVCodec* codec = CodecDeducer::DeduceEncoder(codecId);
+		const AVCodec *codec = CodecDeducer::DeduceEncoder(codecId);
 		codecContext = LoadContext(codec);
 	}
 
@@ -40,7 +40,7 @@ namespace ffmpegcpp
 		av_opt_set(codecContext, name, value, 0);
 	}
 
-	AVCodecContext* Codec::LoadContext(AVCodec* codec)
+	AVCodecContext* Codec::LoadContext(const AVCodec *codec)
 	{
 		AVCodecContext* codecContext = avcodec_alloc_context3(codec);
 		if (!codecContext)
@@ -70,7 +70,7 @@ namespace ffmpegcpp
 			throw FFmpegException("You can only open a codec once");
 		}
 
-		int ret = avcodec_open2(codecContext, codecContext->codec, NULL);
+		int ret = avcodec_open2(codecContext, codecContext->codec, nullptr);
 		if (ret < 0)
 		{
 			throw FFmpegException("Could not open codecContext for codec", ret);

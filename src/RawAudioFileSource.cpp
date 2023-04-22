@@ -10,14 +10,14 @@ namespace ffmpegcpp
 	{
 
 		// try to deduce the input format from the input format name
-		AVInputFormat *file_iformat;
+		const AVInputFormat *file_iformat;
 		if (!(file_iformat = av_find_input_format(inputFormat)))
 		{
 			CleanUp();
 			throw FFmpegException("Unknown input format: " + string(inputFormat));
 		}
 
-		AVDictionary* format_opts = NULL;
+		AVDictionary* format_opts = nullptr;
 
 		av_dict_set_int(&format_opts, "sample_rate", sampleRate, 0);
 		av_dict_set_int(&format_opts, "channels", channels, 0);
@@ -28,7 +28,7 @@ namespace ffmpegcpp
 			demuxer = new Demuxer(fileName, file_iformat, format_opts);
 			demuxer->DecodeBestAudioStream(frameSink);
 		}
-		catch (FFmpegException e)
+		catch (FFmpegException& e)
 		{
 			CleanUp();
 			throw e;

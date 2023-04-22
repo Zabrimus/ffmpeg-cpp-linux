@@ -22,7 +22,7 @@ namespace ffmpegcpp
 		void Close();
 
 		bool IsPrimed();
-		int GetFramesProcessed();
+		int GetFramesProcessed() const;
 
 		virtual void AddStreamInfo(ContainerInfo* info) = 0;
 

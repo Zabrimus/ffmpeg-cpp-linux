@@ -13,16 +13,16 @@ namespace ffmpegcpp
 	public:
 
 		Filter(const char* filterString, FrameSink* target);
-		virtual ~Filter();
+		~Filter() override;
 
-		FrameSinkStream* CreateStream();
+		FrameSinkStream* CreateStream() override;
 
-		void WriteFrame(int streamIndex, AVFrame* frame, StreamData* metaData);
-		void Close(int streamIndex);
+		void WriteFrame(int streamIndex, AVFrame* frame, StreamData* metaData) override;
+		void Close(int streamIndex) override;
 
-		bool IsPrimed();
+		bool IsPrimed() override;
 
-		virtual AVMediaType GetMediaType();
+		AVMediaType GetMediaType() override;
 
 	private:
 

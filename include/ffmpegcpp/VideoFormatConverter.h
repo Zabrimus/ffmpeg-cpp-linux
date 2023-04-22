@@ -9,7 +9,7 @@ namespace ffmpegcpp
 	{
 	public:
 
-		VideoFormatConverter(AVCodecContext* codecContext);
+		explicit VideoFormatConverter(AVCodecContext* codecContext);
 		~VideoFormatConverter();
 
 		AVFrame* ConvertFrame(AVFrame* frame);

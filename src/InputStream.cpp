@@ -12,7 +12,7 @@ namespace ffmpegcpp
 		this->format = format;
 
 		// find decoder for the stream
-		AVCodec* codec = CodecDeducer::DeduceDecoder(stream->codecpar->codec_id);
+		const AVCodec *codec = CodecDeducer::DeduceDecoder(stream->codecpar->codec_id);
 		if (!codec)
 		{
 			CleanUp();
@@ -40,7 +40,7 @@ namespace ffmpegcpp
 		ConfigureCodecContext();
 
 		// Init the decoders
-		if ((ret = avcodec_open2(codecContext, codec, NULL)) < 0)
+		if ((ret = avcodec_open2(codecContext, codec, nullptr)) < 0)
 		{
 			throw FFmpegException("Failed to open codec " + string(codec->name), ret);
 		}
@@ -111,7 +111,7 @@ namespace ffmpegcpp
 
 		AVRational tb = overrideFrameRate.num ? av_inv_q(overrideFrameRate) : stream->time_base;
 		AVRational fr = overrideFrameRate;
-		if (!fr.num) fr = av_guess_frame_rate(format, stream, NULL);
+		if (!fr.num) fr = av_guess_frame_rate(format, stream, nullptr);
 
 		StreamData* metaData = new StreamData();
 		metaData->timeBase = tb;
@@ -157,7 +157,7 @@ namespace ffmpegcpp
 			}
 
 			// push the frame to the next stage.
-			// The time_base is filled in in the codecContext after the first frame is decoded
+			// The time_base is filled in the codecContext after the first frame is decoded,
 			// so we can fetch it from there.
 			if (output == nullptr)
 			{
@@ -171,7 +171,7 @@ namespace ffmpegcpp
 		}
 	}
 
-	int InputStream::GetFramesProcessed()
+	int InputStream::GetFramesProcessed() const
 	{
 		return nFramesProcessed;
 	}

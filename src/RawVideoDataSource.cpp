@@ -80,7 +80,7 @@ namespace ffmpegcpp
 
 		const int in_linesize[1] = { bytesPerRow };
 
-		// if the source and target pixel format are the same, we don't do any conversions, we just copy
+		// if the source and target pixel format are the same, we don't do any conversions, we just copy,
 		// but we use sws_scale anyway because we need to convert to the internal line_size format of frame
 		swsContext = sws_getCachedContext(swsContext,
 			frame->width, frame->height, sourcePixelFormat,

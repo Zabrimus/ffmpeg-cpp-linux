@@ -12,10 +12,10 @@ namespace ffmpegcpp
 		// create the demuxer - it can handle figuring out the video type on its own apparently
 		try
 		{
-			demuxer = new Demuxer(fileName, NULL, NULL);
+			demuxer = new Demuxer(fileName, nullptr, nullptr);
 			demuxer->DecodeBestVideoStream(frameSink);
 		}
-		catch (FFmpegException e)
+		catch (FFmpegException& e)
 		{
 			CleanUp();
 			throw e;

@@ -14,11 +14,11 @@ namespace ffmpegcpp
 	public:
 		EncodedFileSource(const char* inFileName, AVCodecID codecId, FrameSink* output);
 		EncodedFileSource(const char* inFileName, const char* codecName, FrameSink* output);
-		virtual ~EncodedFileSource();
+		~EncodedFileSource() override;
 
-		virtual void PreparePipeline();
-		virtual bool IsDone();
-		virtual void Step();
+		void PreparePipeline() override;
+		bool IsDone() override;
+		void Step() override;
 
 	private:
 
@@ -30,7 +30,7 @@ namespace ffmpegcpp
 		
 		AVCodecParserContext* parser = nullptr;
 
-		AVCodec* codec;
+		const AVCodec* codec;
 		AVCodecContext* codecContext = nullptr;
 
 		int bufferSize;
@@ -41,7 +41,7 @@ namespace ffmpegcpp
 
 		FILE* file;
 
-		void Init(const char* inFileName, AVCodec* codec, FrameSink* output);
+		void Init(const char* inFileName, const AVCodec *codec, FrameSink* output);
 
 		void Decode(AVPacket *packet, AVFrame* targetFrame);
 

@@ -16,7 +16,7 @@ namespace ffmpegcpp
 		void WriteFrame(AVFrame* frame);
 
 		bool HasFrame();
-		bool IsClosed();
+		bool IsClosed() const;
 		bool FetchFrame(AVFrame** frame);
 		bool PeekFrame(AVFrame** frame);
 

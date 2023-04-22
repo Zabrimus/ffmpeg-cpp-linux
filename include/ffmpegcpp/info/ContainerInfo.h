@@ -12,7 +12,7 @@ namespace ffmpegcpp
 		long durationInMicroSeconds;
 		float durationInSeconds;
 		float start;
-		float bitRate;
+		int64_t bitRate;
 		const AVInputFormat* format;
 
 		std::vector<VideoStreamInfo> videoStreams;

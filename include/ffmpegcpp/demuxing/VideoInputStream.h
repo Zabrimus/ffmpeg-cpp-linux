@@ -15,11 +15,11 @@ namespace ffmpegcpp
 		VideoInputStream(AVFormatContext* format, AVStream* stream);
 		~VideoInputStream();
 
-		void AddStreamInfo(ContainerInfo* info);
+		void AddStreamInfo(ContainerInfo* info) override;
 
 	protected:
 
-		virtual void ConfigureCodecContext();
+		void ConfigureCodecContext() override;
 
 	};
 }

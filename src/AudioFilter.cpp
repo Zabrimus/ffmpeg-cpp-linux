@@ -1,10 +1,6 @@
 #include <ffmpegcpp/framesinks/AudioFilter.h>
 
-AudioFilter::AudioFilter()
-{
-}
+AudioFilter::AudioFilter() = default;
 
 
-AudioFilter::~AudioFilter()
-{
-}
+AudioFilter::~AudioFilter() = default;

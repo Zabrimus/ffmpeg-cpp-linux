@@ -59,7 +59,7 @@ namespace ffmpegcpp
 			{
 				if (!inputs[i]->PeekFrame(&frame))
 				{
-					throw new FFmpegException(string("No frame found for input ") + to_string(i));
+					throw FFmpegException(string("No frame found for input ") + to_string(i));
 				}
 
 				// get the meta data for this input stream
@@ -86,8 +86,8 @@ namespace ffmpegcpp
 			// let avfilter generate the entire filter graph based on this string, including all
 			// inputs and outputs. There are other ways to do this, but this is by far the easiest
 			// one.
-			AVFilterInOut *gis = NULL;
-			AVFilterInOut *gos = NULL;
+			AVFilterInOut *gis = nullptr;
+			AVFilterInOut *gos = nullptr;
 			ret = avfilter_graph_parse2(filter_graph, fullFilterString.c_str(), &gis, &gos);
 			if (ret < 0)
 			{
@@ -113,7 +113,7 @@ namespace ffmpegcpp
 			}
 
 			// Finally configure (initialize) the graph.
-			if ((ret = avfilter_graph_config(filter_graph, NULL)) < 0)
+			if ((ret = avfilter_graph_config(filter_graph, nullptr)) < 0)
 			{
 				throw FFmpegException("Failed to configure filter graph", ret);
 			}
@@ -123,7 +123,7 @@ namespace ffmpegcpp
 			outputMetaData.frameRate = buffersink_ctx->inputs[0]->frame_rate;
 			outputMetaData.type = targetMediaType;
 		}
-		catch (FFmpegException e)
+		catch (FFmpegException& e)
 		{
 			throw e;
 		}
@@ -158,7 +158,7 @@ namespace ffmpegcpp
 		// not supported
 		else
 		{
-			throw new FFmpegException(std::string("Media type ") + av_get_media_type_string(metaData->type) + " is not supported by filters.");
+			throw FFmpegException(std::string("Media type ") + av_get_media_type_string(metaData->type) + " is not supported by filters.");
 		}
 	}
 
@@ -167,7 +167,7 @@ namespace ffmpegcpp
 		// this is a video input stream
 		if (mediaType == AVMEDIA_TYPE_VIDEO) return "buffer";
 		else if (mediaType == AVMEDIA_TYPE_AUDIO) return "abuffer";
-		else throw new FFmpegException(std::string("Media type ") + av_get_media_type_string(mediaType) + " is not supported by filters.");
+		else throw FFmpegException(std::string("Media type ") + av_get_media_type_string(mediaType) + " is not supported by filters.");
 	}
 
 	const char* Filter::GetBufferSinkName(AVMediaType mediaType)
@@ -175,7 +175,7 @@ namespace ffmpegcpp
 		// this is a video input stream
 		if (mediaType == AVMEDIA_TYPE_VIDEO) return "buffersink";
 		else if (mediaType == AVMEDIA_TYPE_AUDIO) return "abuffersink";
-		else throw new FFmpegException(std::string("Media type ") + av_get_media_type_string(mediaType) + " is not supported by filters.");
+		else throw FFmpegException(std::string("Media type ") + av_get_media_type_string(mediaType) + " is not supported by filters.");
 	}
 
 	void Filter::DrainInputQueues()
@@ -246,7 +246,7 @@ namespace ffmpegcpp
 	{
 		if (!initialized) return; // can't close if we were never opened
 
-		int ret = av_buffersrc_add_frame_flags(bufferSources[streamIndex], NULL, AV_BUFFERSRC_FLAG_KEEP_REF);
+		int ret = av_buffersrc_add_frame_flags(bufferSources[streamIndex], nullptr, AV_BUFFERSRC_FLAG_KEEP_REF);
 		PollFilterGraphForFrames();
 
 		// close this input

@@ -11,7 +11,7 @@ namespace ffmpegcpp {
 	{
 	public:
 
-		Muxer(const char* fileName);
+		explicit Muxer(const char* fileName);
 		~Muxer();
 
 		void AddOutputStream(OutputStream* stream);
@@ -22,8 +22,8 @@ namespace ffmpegcpp {
 		
 		bool IsPrimed();
 
-		AVCodec* GetDefaultVideoFormat();
-		AVCodec* GetDefaultAudioFormat();
+		const AVCodec * GetDefaultVideoFormat();
+		const AVCodec * GetDefaultAudioFormat();
 
 
 	private:
@@ -33,7 +33,7 @@ namespace ffmpegcpp {
 		std::vector<OutputStream*> outputStreams;
 		std::vector<AVPacket*> packetQueue;
 
-		AVOutputFormat* containerFormat;
+		const AVOutputFormat* containerFormat;
 
 		AVFormatContext* containerContext = nullptr;
 
