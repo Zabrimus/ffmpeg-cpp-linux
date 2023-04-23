@@ -5,29 +5,26 @@ project('ffmpeg-cpp-linux', 'cpp', 'c',
 
 add_global_arguments(language : 'cpp')
 
-CXX = meson.get_compiler('cpp')
-shared_libs = ['avcodec', 'avdevice', 'avfilter', 'avformat', 'avresample', 'avutil', 'postproc', 'swresample', 'swscale']
-deps = []
-foreach lib_name : shared_libs
-        deps += CXX.find_library(lib_name)
-endforeach
+avcodev_dep = dependency('libavcodec', required: true)
+avdevice_dep = dependency('libavdevice', required: true)
+avfilter_dep = dependency('libavfilter', required: true)
+avformat_dep = dependency('libavformat', required: true)
+avresample_dep = dependency('libavresample', required: true)
+avutil_dep = dependency('libavutil', required: true)
+postproc_dep = dependency('libpostproc', required: true)
+swresample_dep = dependency('libswresample', required: true)
+swscale_dep = dependency('libswscale', required: true)
+
+ffmpeg_cpp_dep = [avcodev_dep, avdevice_dep, avfilter_dep, avformat_dep, avutil_dep, postproc_dep, swresample_dep, swscale_dep]
 
 subdir('src')
 inc = include_directories(['include'])
-
 
 ffmpeg_cpp_lib = static_library(
   'ffmpeg_cpp',
   src,
   include_directories: inc,
-  # dependencies: ffmpeg_cpp_dependencies,
-  # cpp_args: ffmpeg_cpp_compile_args,
-  # c_args: ffmpeg_cpp_compile_args,
+  dependencies: ffmpeg_cpp_dep,
 )
 
-ffmpeg_cpp_dep = declare_dependency(
-    # dependencies: ffmpeg_cpp_dependencies,
-    include_directories: inc,
-    link_with: ffmpeg_cpp_lib,
-    # compile_args: ffmpeg_cpp_compile_args,
-)
+subdir('examples')
