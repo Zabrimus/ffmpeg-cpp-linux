@@ -1,8 +1,10 @@
 # ffmpeg-cpp-linux
 
+:warning: FORKED FROM [galla15/ffmpeg-cpp-linux](https://github.com/galla15/ffmpeg-cpp-linux)
+
 :warning: FORKED FROM [Raveler/ffmpeg-cpp](https://github.com/Raveler/ffmpeg-cpp)
 
-[![C/C++ CI](https://github.com/galla15/ffmpeg-cpp-linux/actions/workflows/c-cpp.yml/badge.svg?branch=master&event=push)](https://github.com/galla15/ffmpeg-cpp-linux/actions/workflows/c-cpp.yml)
+# [![C/C++ CI](https://github.com/galla15/ffmpeg-cpp-linux/actions/workflows/c-cpp.yml/badge.svg?branch=master&event=push)](https://github.com/galla15/ffmpeg-cpp-linux/actions/workflows/c-cpp.yml)
 
 # ffmpeg-cpp
 A clean C++ wrapper around the ffmpeg libraries which can be used in any C++ project or C# project (with DllImport or CLR). Makes the most commonly used functionality of FFmpeg easily available for any C++ projects with an easy-to-use interface. The full power of FFmpeg compacted in 10 lines of C++ code: if this sounds useful to you, read on!
@@ -23,7 +25,19 @@ The [*decode_stream*](examples/decode_stream/decode_stream.cpp) needs two more l
 sudo apt install -y libopencv-dev libswscale-dev
 ```
 
+# meson
 ## Build
+Build the ffmpeg library and example applications
+```bash
+meson setup build
+cd build
+meson compile
+```
+The static library can be found in ```build/libffmpeg_cpp.a``` and the samples can be found 
+in ```build/examples```.
+
+# cmake
+## Build 
 
 The library can be built manually like every *cmake* project or through the build script *build.sh*.
 
