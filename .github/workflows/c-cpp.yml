@@ -5,6 +5,7 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -18,4 +19,7 @@ jobs:
       run: sudo apt-get update && sudo apt-get install libavcodec-dev libavformat-dev libavutil-dev libavdevice-dev libavfilter-dev
     
     - name: build all
-      run: ./build.sh -a
+      run: |
+        meson setup build
+        cd build
+        meson compile
