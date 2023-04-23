@@ -28,3 +28,4 @@ ffmpeg_cpp_lib = static_library(
 )
 
 subdir('examples')
+subdir('feasibility_tests')
